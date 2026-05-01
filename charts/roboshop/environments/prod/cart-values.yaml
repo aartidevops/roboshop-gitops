@@ -1,7 +1,7 @@
 environment: prod
 
 image:
-  repository: roboshopprodacr.azurecr.io/cart
+  repository: roboshopdevacr.azurecr.io/cart
   tag: "latest"
 
 replicaCount: 1

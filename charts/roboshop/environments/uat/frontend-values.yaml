@@ -1,7 +1,7 @@
 environment: uat
 
 image:
-  repository: roboshopuatacr.azurecr.io/frontend
+  repository: roboshopdevacr.azurecr.io/frontend
   tag: "latest"
 
 replicaCount: 1

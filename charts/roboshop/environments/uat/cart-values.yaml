@@ -1,7 +1,7 @@
 environment: uat
 
 image:
-  repository: roboshopuatacr.azurecr.io/cart
+  repository: roboshopdevacr.azurecr.io/cart
   tag: "latest"
 
 replicaCount: 1
