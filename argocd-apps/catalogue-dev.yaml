@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: catalogue-dev
+  namespace: argocd
+  # Auto-delete app when manifest is removed from git
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: roboshop-dev
+
+  source:
+    repoURL: https://github.com/aartidevops/roboshop-gitops
+    targetRevision: main
+    path: charts/roboshop
+    helm:
+      valueFiles:
+        - ../../environments/dev/catalogue-values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: roboshop-dev
+
+  syncPolicy:
+    automated:
+      prune: true       # delete removed resources
+      selfHeal: true    # revert manual kubectl changes
+    syncOptions:
+      - CreateNamespace=false

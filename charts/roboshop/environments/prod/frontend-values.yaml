@@ -1,0 +1,30 @@
+environment: prod
+
+image:
+  repository: roboshopprodacr.azurecr.io/frontend
+  tag: "latest"
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 80
+
+appCommand: "nginx -g 'daemon off;'"
+healthPath: "/health"
+
+ingress:
+  enabled: true
+  host: prod.skilltechnology.online
+  path: /
+  className: nginx
+  tls: true
+
+vault:
+  enabled: false   # frontend has no secrets — it's just nginx
+
+env:
+  CATALOGUE_HOST: catalogue-svc
+  CATALOGUE_PORT: "80"
+  CART_HOST: cart-svc
+  CART_PORT: "80"

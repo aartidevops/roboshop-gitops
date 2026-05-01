@@ -1,0 +1,46 @@
+# Default values — overridden per service per environment
+
+replicaCount: 1
+
+image:
+  repository: roboshopdevacr.azurecr.io/catalogue
+  tag: "latest"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: false
+  host: ""
+  path: "/"
+  className: nginx
+  tls: true
+
+# Vault agent injection settings
+vault:
+  enabled: true
+  role: ""        # set per environment: roboshop-dev, roboshop-uat, roboshop-prod
+  secrets: []     # list of secrets to inject
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+# Horizontal Pod Autoscaler
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilization: 70
+
+env: {}           # extra environment variables per service
+
+serviceAccount:
+  name: roboshop-sa   # must match Vault K8s auth binding

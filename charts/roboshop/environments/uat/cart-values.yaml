@@ -1,0 +1,41 @@
+environment: uat
+
+image:
+  repository: roboshopuatacr.azurecr.io/cart
+  tag: "latest"
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 8080
+
+appCommand: "node /app/server.js"
+healthPath: "/health"
+
+ingress:
+  enabled: false
+
+vault:
+  enabled: true
+  role: roboshop-uat
+  secrets:
+    - name: mongodb
+      path: secret/data/roboshop/uat/mongodb
+      envVars:
+        - envName: MONGO_URL
+          secretKey: uri
+    - name: redis
+      path: secret/data/roboshop/uat/redis
+      envVars:
+        - envName: REDIS_HOST
+          secretKey: host
+        - envName: REDIS_PORT
+          secretKey: port
+        - envName: REDIS_PASSWORD
+          secretKey: password
+
+env:
+  APP_ENV: uat
+  CATALOGUE_HOST: catalogue-svc
+  CATALOGUE_PORT: "80"

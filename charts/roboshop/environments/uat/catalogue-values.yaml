@@ -1,0 +1,44 @@
+# Catalogue service — uat environment
+environment: uat
+
+image:
+  repository: roboshopuatacr.azurecr.io/catalogue
+  tag: "latest"    # CI pipeline updates this automatically
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 8080
+
+appCommand: "node /app/server.js"
+healthPath: "/health"
+
+ingress:
+  enabled: false   # catalogue is internal — no public ingress
+  # frontend calls catalogue via service name
+
+vault:
+  enabled: true
+  role: roboshop-uat
+  secrets:
+    - name: mongodb
+      path: secret/data/roboshop/uat/mongodb
+      envVars:
+        - envName: MONGO_URL
+          secretKey: uri
+
+env:
+  APP_ENV: uat
+  LOG_LEVEL: debug
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+hpa:
+  enabled: false   # enable later when load testing

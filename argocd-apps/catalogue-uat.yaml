@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: catalogue-uat
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: roboshop-uat
+  source:
+    repoURL: https://github.com/aartidevops/roboshop-gitops
+    targetRevision: main
+    path: charts/roboshop
+    helm:
+      valueFiles:
+        - ../../environments/uat/catalogue-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: roboshop-uat
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false

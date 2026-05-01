@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: catalogue-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: roboshop-prod
+  source:
+    repoURL: https://github.com/aartidevops/roboshop-gitops
+    targetRevision: main
+    path: charts/roboshop
+    helm:
+      valueFiles:
+        - ../../environments/prod/catalogue-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: roboshop-prod
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=false
+    # No automated sync for prod
+    # Manual sync only via ArgoCD UI or CLI
+    # This prevents accidental prod deployments
