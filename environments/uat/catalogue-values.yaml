@@ -3,7 +3,7 @@ environment: uat
 
 image:
   repository: roboshopdevacr.azurecr.io/catalogue
-  tag: "latest"    # CI pipeline updates this automatically
+  tag: "main-2af6f97"
 
 replicaCount: 1
 
