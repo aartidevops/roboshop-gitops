@@ -2,7 +2,7 @@ environment: dev
 
 image:
   repository: roboshopdevacr.azurecr.io/cart
-  tag: "main-b709982"
+  tag: "main-846171d"
 
 replicaCount: 1
 
