@@ -2,7 +2,7 @@ environment: uat
 
 image:
   repository: roboshopdevacr.azurecr.io/frontend
-  tag: "main-defda71"
+  tag: "main-4295aae"
 
 replicaCount: 1
 
