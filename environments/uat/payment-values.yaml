@@ -2,7 +2,7 @@ environment: uat
 
 image:
   repository: roboshopdevacr.azurecr.io/payment
-  tag: "latest"
+  tag: "main-d8858f2"
 
 replicaCount: 1
 
