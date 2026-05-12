@@ -21,6 +21,15 @@ spec:
         vault.hashicorp.com/agent-inject-status: "update"
         {{- range .Values.vault.secrets }}
         vault.hashicorp.com/agent-inject-secret-{{ .name }}: {{ .path | quote }}
+        {{- if .envVars }}
+        {{- $path := .path }}
+        vault.hashicorp.com/agent-inject-template-{{ .name }}: |
+          {{ "{{" }}- with secret "{{ $path }}" -{{ "}}" }}
+          {{- range .envVars }}
+          export {{ .envName }}="{{ "{{" }} .Data.data.{{ .secretKey }} {{ "}}" }}"
+          {{- end }}
+          {{ "{{" }}- end {{ "}}" }}
+        {{- end }}
         {{- end }}
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
@@ -30,6 +39,21 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.targetPort }}
+          {{- if and .Values.vault.enabled .Values.appCommand }}
+          # When vault is enabled, wrap the start command to source
+          # secret env var files written by vault-agent sidecar
+          # before launching the actual app process.
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              {{- range .Values.vault.secrets }}
+              {{- if .envVars }}
+              while [ ! -f /vault/secrets/{{ .name }} ]; do echo "waiting for vault secret: {{ .name }}..."; sleep 2; done
+              . /vault/secrets/{{ .name }}
+              {{- end }}
+              {{- end }}
+              exec {{ $.Values.appCommand }}
+          {{- end }}
           env:
             - name: APP_ENV
               value: {{ .Values.environment | default "dev" | quote }}

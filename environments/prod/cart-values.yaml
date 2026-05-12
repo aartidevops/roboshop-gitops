@@ -1,3 +1,4 @@
+serviceName: cart
 environment: prod
 
 image:

@@ -1,3 +1,4 @@
+serviceName: shipping
 environment: uat
 
 image:

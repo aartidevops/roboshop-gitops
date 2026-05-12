@@ -1,3 +1,4 @@
+serviceName: user
 environment: dev
 
 image:
@@ -11,6 +12,7 @@ service:
   targetPort: 8080
 
 healthPath: "/health"
+appCommand: "node server.js"
 
 ingress:
   enabled: false   # user is internal — called by frontend JS
@@ -21,8 +23,14 @@ vault:
   secrets:
     - name: mongodb
       path: secret/data/roboshop/dev/mongodb
+      envVars:
+        - envName: MONGO_URL
+          secretKey: uri
     - name: redis
       path: secret/data/roboshop/dev/redis
+      envVars:
+        - envName: REDIS_URL
+          secretKey: url
 
 env:
   APP_ENV: dev

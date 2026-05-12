@@ -1,3 +1,4 @@
+serviceName: payment
 environment: dev
 
 image:

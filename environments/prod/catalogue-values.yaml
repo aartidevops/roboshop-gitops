@@ -1,3 +1,4 @@
+serviceName: catalogue
 # Catalogue service — prod environment
 environment: prod
 

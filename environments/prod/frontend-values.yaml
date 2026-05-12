@@ -1,3 +1,4 @@
+serviceName: frontend
 environment: prod
 
 image:
