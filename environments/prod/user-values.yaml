@@ -2,7 +2,7 @@ environment: prod
 
 image:
   repository: roboshopdevacr.azurecr.io/user
-  tag: "latest"
+  tag: "main-50869da"
 
 replicaCount: 1
 
