@@ -1,0 +1,40 @@
+environment: prod
+
+image:
+  repository: roboshopdevacr.azurecr.io/user
+  tag: "latest"
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 8080
+
+healthPath: "/health"
+
+ingress:
+  enabled: false   # user is internal — called by frontend JS
+
+vault:
+  enabled: true
+  role: roboshop-dev
+  secrets:
+    - name: mongodb
+      path: secret/data/roboshop/dev/mongodb
+    - name: redis
+      path: secret/data/roboshop/dev/redis
+
+env:
+  APP_ENV: dev
+  LOG_LEVEL: debug
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+hpa:
+  enabled: false

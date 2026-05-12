@@ -1,0 +1,35 @@
+environment: dev
+
+image:
+  repository: roboshopdevacr.azurecr.io/shipping
+  tag: "latest"
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 8080
+
+healthPath: "/health"
+
+ingress:
+  enabled: false   # shipping is internal
+
+vault:
+  enabled: false   # shipping gets DB config via env vars
+
+env:
+  APP_ENV: dev
+  CART_HOST: cart-svc
+  CART_PORT: "80"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi   # Java needs more memory
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+hpa:
+  enabled: false

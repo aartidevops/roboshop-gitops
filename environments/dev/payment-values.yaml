@@ -1,0 +1,40 @@
+environment: dev
+
+image:
+  repository: roboshopdevacr.azurecr.io/payment
+  tag: "latest"
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 8080
+
+healthPath: "/health"
+
+ingress:
+  enabled: false   # payment is internal
+
+vault:
+  enabled: false   # payment gets config via env vars below
+
+env:
+  APP_ENV: dev
+  CART_HOST: cart-svc
+  CART_PORT: "80"
+  USER_HOST: user-svc
+  USER_PORT: "80"
+  AMQP_HOST: rabbitmq
+  AMQP_USER: roboshop
+  AMQP_PASS: roboshop123
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+hpa:
+  enabled: false

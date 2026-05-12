@@ -1,0 +1,36 @@
+environment: prod
+
+image:
+  repository: roboshopdevacr.azurecr.io/dispatch
+  tag: "latest"
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 8080
+
+healthPath: "/health"
+
+ingress:
+  enabled: false   # dispatch is a background worker
+
+vault:
+  enabled: false
+
+env:
+  APP_ENV: dev
+  AMQP_HOST: rabbitmq
+  AMQP_USER: roboshop
+  AMQP_PASS: roboshop123
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+hpa:
+  enabled: false
