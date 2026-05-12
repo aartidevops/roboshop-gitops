@@ -23,6 +23,7 @@ env:
   APP_ENV: dev
   CART_HOST: cart-svc
   CART_PORT: "80"
+  DB_HOST: mysql    # MySQL service name in same namespace
 
 resources:
   requests:
