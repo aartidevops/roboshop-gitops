@@ -4,7 +4,7 @@ environment: dev
 
 image:
   repository: roboshopdevacr.azurecr.io/catalogue
-  tag: "main-3c8a178"
+  tag: "main-a6f07f9"
 
 replicaCount: 1
 
