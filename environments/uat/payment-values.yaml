@@ -3,7 +3,7 @@ environment: uat
 
 image:
   repository: roboshopdevacr.azurecr.io/payment
-  tag: "main-d8858f2"
+  tag: "main-b20b0b1"
 
 replicaCount: 1
 
