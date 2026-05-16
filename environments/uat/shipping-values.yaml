@@ -3,7 +3,7 @@ environment: uat
 
 image:
   repository: roboshopdevacr.azurecr.io/shipping
-  tag: "main-c1aaa3e"
+  tag: "main-4d3c3c3"
 
 replicaCount: 1
 
